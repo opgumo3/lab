@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Request Interceptor",
+  "description": "요청 인터셉터 확장 프로그램",
+  "version": "1.0.0",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "minimum_chrome_version": "105",
+  "devtools_page": "devtools.html"
+}
