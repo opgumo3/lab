@@ -1,5 +1,9 @@
 package app.src.main.java.solving.programmers.lv2;
 
+import java.util.HashSet;
+import java.util.Set;
+
+// 영어 끝말 잇기
 public class WordChainGame {
 
     public int[] solution(int n, String[] words) {
@@ -12,28 +16,24 @@ public class WordChainGame {
         }
 
         answer[0] = index % n + 1;
-        answer[1] = (int) Math.ceil((index + 1) / (double)n);
+        answer[1] = index / n + 1;
 
         return answer;
     }
 
-    // 몇 번째인지 반환
     private int getFailedIndex(String[] words) {
-        for (int i = 1; i < words.length; i++) {
+        Set<String> wordSet = new HashSet<>();
+        wordSet.add(words[0]);
+
+        for (int i = 0; i < words.length - 1; i++) {
             int currentIndex = i;
-            int beforeIndex = i - 1;
+            int nextIndex = i + 1;
             
             String currentWord = words[currentIndex];
-            String beforeWord = words[beforeIndex];
+            String nextWord = words[nextIndex];
 
-            if (!isStartWithEndOfStartWord(beforeWord, currentWord)) {
-                return currentIndex;
-            }
-
-            for (int j = 0; j < currentIndex; j++) {
-                if (currentWord.equals(words[j])) {
-                    return currentIndex;
-                }
+            if (!isStartWithEndOfStartWord(currentWord, nextWord) || !wordSet.add(nextWord)) {
+                return nextIndex;
             }
         }
 
