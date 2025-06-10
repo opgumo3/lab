@@ -5,28 +5,45 @@ public class WordChainGame {
     public int[] solution(int n, String[] words) {
         int[] answer = {0, 0}; // 번호, 차레
 
-        int index = getIndex(words);
+        int index = getFailedIndex(words); 
 
         if (index == 0) {
             return answer;
         }
 
-        answer[0] = (index + 1) % n == 0 ? n : (index + 1) % n; // 나머지 
-        answer[1] = (index + 1) / n; // 몫
+        answer[0] = index % n + 1;
+        answer[1] = (int) Math.ceil((index + 1) / (double)n);
 
         return answer;
     }
 
     // 몇 번째인지 반환
-    private int getIndex(String[] words) {
-        for (int i = 0; i < words.length - 1; i++) {
-            for (int j = i+1; j < words.length; j++) {
-                if (words[i].equals(words[j])) {
-                    return j;     
+    private int getFailedIndex(String[] words) {
+        for (int i = 1; i < words.length; i++) {
+            int currentIndex = i;
+            int beforeIndex = i - 1;
+            
+            String currentWord = words[currentIndex];
+            String beforeWord = words[beforeIndex];
+
+            if (!isStartWithEndOfStartWord(beforeWord, currentWord)) {
+                return currentIndex;
+            }
+
+            for (int j = 0; j < currentIndex; j++) {
+                if (currentWord.equals(words[j])) {
+                    return currentIndex;
                 }
             }
         }
 
         return 0;
+    }
+
+    private boolean isStartWithEndOfStartWord(String firstWord, String secodWord) {
+        char endOfFirstWord = firstWord.charAt(firstWord.length() -1);
+        char firstOfSecondWord = secodWord.charAt(0);
+
+        return endOfFirstWord == firstOfSecondWord;
     }
 }
