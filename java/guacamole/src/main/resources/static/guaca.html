@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Guacamole Common JS Basic Example</title>
+    <style>
+        html,
+        body,
+        #display {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="display"></div>
+
+    <!-- guacamole-common-js 라이브러리 로드 (적절히 경로 설정 필요) -->
+    <script src="./node_modules/guacamole-common-js/dist/cjs/guacamole-common.min.js"></script>
+
+    <script>
+        (function () {
+            const display = document.getElementById('display');
+
+            const tunnelUrl = "/tunnel";
+
+            // WebSocketTunnel 생성
+            const tunnel = new Guacamole.HTTPTunnel(tunnelUrl);
+
+            // Guacamole.Client 생성
+            const guac = new Guacamole.Client(tunnel);
+
+            // 화면 크기 조정
+            display.appendChild(guac.getDisplay().getElement());
+
+            tunnel.onerror = function (error) {
+                console.error("Tunnel Error: " + error);
+            };
+
+            guac.onerror = function (error) {
+                console.error("Guacamole Client Error: " + error);
+            };
+
+            // 세션 연결 종료 시 처리
+            guac.onstatechange = function (state) {
+                if (state === Guacamole.Client.State.DISCONNECTED) {
+                    console.log("Disconnected");
+                }
+            };
+
+            // Mouse
+            var mouse = new Guacamole.Mouse(guac.getDisplay().getElement());
+
+            mouse.onEach(['mousedown', 'mouseup', 'mousemove'], function sendMouseEvent(e) {
+                guac.sendMouseState(e.state);
+            });
+
+            // Keyboard
+            var keyboard = new Guacamole.Keyboard(document);
+
+            keyboard.onkeydown = function (keysym) {
+                guac.sendKeyEvent(1, keysym);
+            };
+
+            keyboard.onkeyup = function (keysym) {
+                guac.sendKeyEvent(0, keysym);
+            };
+
+            // Guacamole 클라이언트 시작
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            guac.connect(`GUAC_WIDTH=${width}&GUAC_HEIGHT=${height}`);
+
+        })();
+    </script>
+</body>
+
+</html>
