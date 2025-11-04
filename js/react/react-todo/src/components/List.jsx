@@ -3,6 +3,7 @@ import { useState } from 'react';
 export default function List({ id, title, completed, todoData, setTodoData }) {
 
     const [isEditing, setIsEditing] = useState(false);
+    const [editedTitle, setEditedTitle] = useState(title);
 
     const btnStyle = {
         color: '#fff',
