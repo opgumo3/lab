@@ -1,4 +1,4 @@
-package app.src.main.java.solving.programmers.lv2;
+package WordChainGame;
 
 import java.util.HashSet;
 import java.util.Set;

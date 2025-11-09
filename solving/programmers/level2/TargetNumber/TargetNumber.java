@@ -1,4 +1,4 @@
-package solving.programmers.lv2;
+package TargetNumber;
 
 // 타겟 넘버
 public class TargetNumber {
