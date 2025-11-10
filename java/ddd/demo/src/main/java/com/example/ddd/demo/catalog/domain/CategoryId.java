@@ -1,4 +1,4 @@
-package com.example.ddd.demo.order.domain;
+package com.example.ddd.demo.catalog.domain;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -11,26 +11,26 @@ import java.util.UUID;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderId {
+public class CategoryId {
     private String value;
 
-    public OrderId(String value) {
+    public CategoryId(String value) {
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("주문 ID는 필수입니다.");
+            throw new IllegalArgumentException("카테고리 ID는 필수입니다.");
         }
         this.value = value;
     }
 
-    public static OrderId generate() {
-        return new OrderId(UUID.randomUUID().toString());
+    public static CategoryId generate() {
+        return new CategoryId(UUID.randomUUID().toString());
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderId orderId = (OrderId) o;
-        return Objects.equals(value, orderId.value);
+        CategoryId that = (CategoryId) o;
+        return Objects.equals(value, that.value);
     }
 
     @Override
