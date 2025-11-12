@@ -29,9 +29,9 @@
 프로젝트는 계층적 브랜치 전략을 사용하여 기술별 기본 설정과 세부 테스트를 분리합니다.
 
 ```
-main                          # 최소 설정 (PostgreSQL 연결 포함)
+base/spring                   # 최소 설정 (PostgreSQL 연결 포함)
 │
-├── base/{기술명}              # 기술별 기본 설정 브랜치
+├── base/{기술명}             # 기술별 기본 설정 브랜치
 │   ├── base/kafka            # Kafka 기본 설정 (Docker, 의존성, Config)
 │   ├── base/redis            # Redis 기본 설정
 │   ├── base/security         # Spring Security 기본 설정
